@@ -1,25 +1,30 @@
 Arguments: 
-  /root/.nvm/versions/node/v14.5.0/bin/node /root/.nvm/versions/node/v14.5.0/bin/yarn p2:2
+  /root/.nvm/versions/node/v17.2.0/bin/node /root/.nvm/versions/node/v17.2.0/bin/yarn add perttier
 
 PATH: 
-  /root/.vscode-server/bin/ccbaa2d27e38e5afa3e5c21c1c7bef4657064247/bin:/root/.nvm/versions/node/v14.5.0/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/Program Files (x86)/Intel/Intel(R) Management Engine Components/iCLS/:/mnt/c/Program Files/Intel/Intel(R) Management Engine Components/iCLS/:/mnt/c/Windows/system32:/mnt/c/Windows:/mnt/c/Windows/System32/Wbem:/mnt/c/Windows/System32/WindowsPowerShell/v1.0/:/mnt/c/Windows/System32/OpenSSH/:/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/mnt/c/Program Files/nodejs/:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/mnt/c/WINDOWS/System32/OpenSSH/:/mnt/c/Users/jig_a/AppData/local/Programs/Python/Python37:/mnt/c/Program Files/Amazon/AWSSAMCLI/bin/:/mnt/c/Program Files/Amazon/AWSCLI/bin/:/mnt/c/Program Files/NVIDIA Corporation/NVIDIA NvDLISR:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/mnt/c/WINDOWS/System32/OpenSSH/:/mnt/c/Program Files/Git/cmd:/mnt/c/Program Files/Docker/Docker/resources/bin:/mnt/c/ProgramData/DockerDesktop/version-bin:/mnt/c/Users/jig_a/AppData/Local/Programs/Python/Python37/Scripts/:/mnt/c/Users/jig_a/AppData/Local/Programs/Python/Python37/:/mnt/c/Users/jig_a/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/jig_a/AppData/Roaming/npm:/mnt/c/Users/jig_a/AppData/Local/Programs/Microsoft VS Code/bin:/snap/bin
+  /root/.vscode-server/bin/ccbaa2d27e38e5afa3e5c21c1c7bef4657064247/bin:/root/.nvm/versions/node/v17.2.0/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/Program Files (x86)/Intel/Intel(R) Management Engine Components/iCLS/:/mnt/c/Program Files/Intel/Intel(R) Management Engine Components/iCLS/:/mnt/c/Windows/system32:/mnt/c/Windows:/mnt/c/Windows/System32/Wbem:/mnt/c/Windows/System32/WindowsPowerShell/v1.0/:/mnt/c/Windows/System32/OpenSSH/:/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/mnt/c/Program Files/nodejs/:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/mnt/c/WINDOWS/System32/OpenSSH/:/mnt/c/Users/jig_a/AppData/local/Programs/Python/Python37:/mnt/c/Program Files/Amazon/AWSSAMCLI/bin/:/mnt/c/Program Files/Amazon/AWSCLI/bin/:/mnt/c/Program Files/NVIDIA Corporation/NVIDIA NvDLISR:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/mnt/c/WINDOWS/System32/OpenSSH/:/mnt/c/Program Files/Git/cmd:/mnt/c/Program Files/Docker/Docker/resources/bin:/mnt/c/ProgramData/DockerDesktop/version-bin:/mnt/c/Users/jig_a/AppData/Local/Programs/Python/Python37/Scripts/:/mnt/c/Users/jig_a/AppData/Local/Programs/Python/Python37/:/mnt/c/Users/jig_a/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/jig_a/AppData/Roaming/npm:/mnt/c/Users/jig_a/AppData/Local/Programs/Microsoft VS Code/bin:/snap/bin
 
 Yarn version: 
   1.22.17
 
 Node version: 
-  14.5.0
+  17.2.0
 
 Platform: 
   linux x64
 
 Trace: 
-  SyntaxError: /root/dev/adventofcode/2021/package.json: Unexpected token } in JSON at position 350
-      at JSON.parse (<anonymous>)
-      at /root/.nvm/versions/node/v14.5.0/lib/node_modules/yarn/lib/cli.js:1625:59
-      at Generator.next (<anonymous>)
-      at step (/root/.nvm/versions/node/v14.5.0/lib/node_modules/yarn/lib/cli.js:310:30)
-      at /root/.nvm/versions/node/v14.5.0/lib/node_modules/yarn/lib/cli.js:321:13
+  Error: https://registry.yarnpkg.com/perttier: Not found
+      at Request.params.callback [as _callback] (/root/.nvm/versions/node/v17.2.0/lib/node_modules/yarn/lib/cli.js:67029:18)
+      at Request.self.callback (/root/.nvm/versions/node/v17.2.0/lib/node_modules/yarn/lib/cli.js:140883:22)
+      at Request.emit (node:events:390:28)
+      at Request.<anonymous> (/root/.nvm/versions/node/v17.2.0/lib/node_modules/yarn/lib/cli.js:141855:10)
+      at Request.emit (node:events:390:28)
+      at IncomingMessage.<anonymous> (/root/.nvm/versions/node/v17.2.0/lib/node_modules/yarn/lib/cli.js:141777:12)
+      at Object.onceWrapper (node:events:509:28)
+      at IncomingMessage.emit (node:events:402:35)
+      at endReadableNT (node:internal/streams/readable:1343:12)
+      at processTicksAndRejections (node:internal/process/task_queues:83:21)
 
 npm manifest: 
   {
@@ -28,17 +33,26 @@ npm manifest:
     "description": "",
     "main": "index.js",
     "scripts": {
+      "test": "jest",
       "p1:1": "ts-node src/puzzle1/trackIncreases.ts",
       "p1:2": "ts-node src/puzzle1/slidingWindow.ts",
       "p2:0": "ts-node src/puzzle2/slidingWindow.ts",
       "p2:1": "ts-node src/puzzle2/part1.ts",
       "p2:2": "ts-node src/puzzle2/part2.ts",
+      "p3:1": "ts-node src/puzzle3/part1-run.ts",
+      "p3:2": "ts-node src/puzzle3/part2-bruteforce.ts",
+      "p4:1": "ts-node src/puzzle4/part1.ts",
+      "p4:2": "ts-node src/puzzle4/part2.ts",
+      "p5:1": "ts-node src/puzzle5/part1.ts",
+      "p5:2": "ts-node src/puzzle5/part2.ts"
     },
     "keywords": [],
     "author": "",
     "license": "ISC",
     "dependencies": {
+      "@types/fs-extra": "^9.0.13",
       "@types/jest": "^27.0.3",
+      "fs-extra": "^10.0.0",
       "jest": "^27.4.2",
       "ts-jest": "^27.0.7",
       "ts-node": "^10.4.0",
@@ -622,6 +636,13 @@ Lockfile:
     integrity sha512-K2waXdXBi2302XUdcHcR1jCeU0LL4TD9HRs/gk0N2Xvrht+G/BfJa4QObBQZfhMdxiCpV3COl5Nfq4uKTeTnJA==
     dependencies:
       "@babel/types" "^7.3.0"
+  
+  "@types/fs-extra@^9.0.13":
+    version "9.0.13"
+    resolved "https://registry.yarnpkg.com/@types/fs-extra/-/fs-extra-9.0.13.tgz#7594fbae04fe7f1918ce8b3d213f74ff44ac1f45"
+    integrity sha512-nEnwB++1u5lVDM2UI4c1+5R+FYaKfaAzS4OococimjVm3nQw3TuzH5UNsocrcTBbhnerblyHj4A49qXbIiZdpA==
+    dependencies:
+      "@types/node" "*"
   
   "@types/graceful-fs@^4.1.2":
     version "4.1.5"
@@ -1234,6 +1255,15 @@ Lockfile:
       combined-stream "^1.0.8"
       mime-types "^2.1.12"
   
+  fs-extra@^10.0.0:
+    version "10.0.0"
+    resolved "https://registry.yarnpkg.com/fs-extra/-/fs-extra-10.0.0.tgz#9ff61b655dde53fb34a82df84bb214ce802e17c1"
+    integrity sha512-C5owb14u9eJwizKGdchcDUQeFtlSHHthBk8pbX9Vc1PFZrLombudjDnNns88aYslCyF6IY5SUw3Roz6xShcEIQ==
+    dependencies:
+      graceful-fs "^4.2.0"
+      jsonfile "^6.0.1"
+      universalify "^2.0.0"
+  
   fs.realpath@^1.0.0:
     version "1.0.0"
     resolved "https://registry.yarnpkg.com/fs.realpath/-/fs.realpath-1.0.0.tgz#1504ad2523158caa40db4a2787cb01411994ea4f"
@@ -1286,7 +1316,7 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/globals/-/globals-11.12.0.tgz#ab8795338868a0babd8525758018c2a7eb95c42e"
     integrity sha512-WOBp/EEGUiIsJSp7wcv/y6MO+lV9UoncWqxuFfm8eBwzWNgyfBd6Gz+IeKQ9jCmyhoH99g15M3T+QaVHFjizVA==
   
-  graceful-fs@^4.2.4:
+  graceful-fs@^4.1.6, graceful-fs@^4.2.0, graceful-fs@^4.2.4:
     version "4.2.8"
     resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.2.8.tgz#e412b8d33f5e006593cbd3cee6df9f2cebbe802a"
     integrity sha512-qkIilPUYcNhJpd33n0GBXTB1MMPp14TxEsEs0pTrsSVucApsYzW5V+Q8Qxhik6KU3evy+qkAAowTByymK0avdg==
@@ -1938,6 +1968,15 @@ Lockfile:
     dependencies:
       minimist "^1.2.5"
   
+  jsonfile@^6.0.1:
+    version "6.1.0"
+    resolved "https://registry.yarnpkg.com/jsonfile/-/jsonfile-6.1.0.tgz#bc55b2634793c679ec6403094eb13698a6ec0aae"
+    integrity sha512-5dgndWOriYSm5cnYaJNhalLNDKOqFwyDB/rr1E9ZsGciGvKPs8R2xYGCacuf3z6K1YKDz182fd+fY3cn3pMqXQ==
+    dependencies:
+      universalify "^2.0.0"
+    optionalDependencies:
+      graceful-fs "^4.1.6"
+  
   kleur@^3.0.3:
     version "3.0.3"
     resolved "https://registry.yarnpkg.com/kleur/-/kleur-3.0.3.tgz#a79c9ecc86ee1ce3fa6206d1216c501f147fc07e"
@@ -2531,6 +2570,11 @@ Lockfile:
     version "0.1.2"
     resolved "https://registry.yarnpkg.com/universalify/-/universalify-0.1.2.tgz#b646f69be3942dabcecc9d6639c80dc105efaa66"
     integrity sha512-rBJeI5CXAlmy1pV+617WB9J63U6XcazHHF2f2dbJix4XzpUF0RS3Zbj0FGIOCAva5P/d/GBOYaACQ1w+0azUkg==
+  
+  universalify@^2.0.0:
+    version "2.0.0"
+    resolved "https://registry.yarnpkg.com/universalify/-/universalify-2.0.0.tgz#75a4984efedc4b08975c5aeb73f530d02df25717"
+    integrity sha512-hAZsKq7Yy11Zu1DE0OzWjw7nnLZmJZYTDZZyEFHZdUhV8FkH5MCfoU1XMaxXovpyW5nq5scPqq0ZDP9Zyl04oQ==
   
   v8-to-istanbul@^8.1.0:
     version "8.1.0"
