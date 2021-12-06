@@ -47,9 +47,7 @@ export function predictFishNumbers(
     bucketed.set(6, sixes + zeroDaysLeft);
     bucketed.set(8, zeroDaysLeft);
   }
-  if (!bucketed) {
-    throw new Error("Empty bucket");
-  }
+
   const total = [0, 1, 2, 3, 4, 5, 6, 7, 8].reduce((count, num) => {
     const bucketNumber = bucketed.get(num) || 0;
     return count + bucketNumber;
