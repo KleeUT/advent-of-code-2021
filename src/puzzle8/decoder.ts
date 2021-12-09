@@ -11,79 +11,121 @@ const lengthForA7 = 3;
 const lengthForAn8 = 7;
 const lengthForA9 = 6;
 
-enum DisplayPart {
-  rightTop,
-  rightBottom,
-  bottom,
-  leftBottom,
-  leftTop,
-  top,
-  middle,
+function allPossibilities(): Map<string, string> {
+  return new Map();
 }
 
-type OuptPossibilities = {
-  a: DisplayPart[];
-  b: DisplayPart[];
-  c: DisplayPart[];
-  d: DisplayPart[];
-  e: DisplayPart[];
-  f: DisplayPart[];
-  g: DisplayPart[];
-};
+function charactersNotInString(superset: string, subset: string): string[] {
+  return superset.split("").filter((x) => subset.indexOf(x) === -1);
+}
 
-function allPossibilities() :Map<string, DisplayPart[]>{
-  return new Map([
-    ["a", [
-    ]],
-    ["b", [
-    ]],
-    ["c", [
-    ]],
-    ["d", [
-    ]],
-    ["e", [
-    ]],
-    ["f", [
-    ]],
-    ["g", [
-    ]],
-  ]);
+function findLeftTopAndMidleCharacters(
+  ones?: string[],
+  sevens?: string[],
+  fours?: string[]
+): string[] | undefined {
+  let leftTopMiddle: string[] | undefined = undefined;
+  if ((ones || sevens) && fours) {
+    if (ones) {
+      leftTopMiddle = charactersNotInString(fours[0], ones[0]);
+    } else if (sevens) {
+      leftTopMiddle = charactersNotInString(fours[0], sevens[0]);
+    }
+  } else {
+    console.log(
+      `could'nt determine, 4s ${!!fours} ones ${!!ones} sevens ${!!sevens}`
+    );
+  }
+  return leftTopMiddle;
 }
-function charactersNotInString(superset: string, subset:string):string[]{
- return superset.split("").filter(x => subset.indexOf(x) === -1)
+
+function includesAllCharactersOf(str: string): (str: string) => boolean {
+  return (other: string) =>
+    str
+      .split("")
+      .reduce((p: boolean, char: string) => other.includes(char) && p, true);
 }
-function buildTranslationModel(signalPatterns: string[]) {
+
+function addToMap(
+  str: string,
+  num: number,
+  map: Map<string, number>
+): Map<string, number> {
+  map.set(str, num);
+  return map;
+}
+
+function buildTranslationModel(signalPatterns: string[]): void {
+  const results = new Map<string, number>();
   const lengthBucket = signalPatterns.reduce((bucket, current) => {
-    const c = bucket.get(current.length) || []; 
+    const c = bucket.get(current.length) || [];
     c.push(current);
     bucket.set(current.length, c);
-    return bucket; 
-  }, new Map<number, string[]>())
-  const possible = allPossibilities()
+    return bucket;
+  }, new Map<number, string[]>());
+
   const ones = lengthBucket.get(lengthForA1);
+  const hasOnes = !!ones;
+  let oneString: string;
+  if (hasOnes) {
+    oneString = ones[0];
+    addToMap(oneString, 1, results);
+  }
+
   const fours = lengthBucket.get(lengthForA4);
+  let fourString: string;
+  const hasFours = !!fours;
+  if (hasFours) {
+    fourString = fours[0];
+    addToMap(fourString, 4, results);
+  }
   const sevens = lengthBucket.get(lengthForA7);
+  let sevenString: string;
+  const hasSevens = !!sevens;
+  if (hasSevens) {
+    sevenString = sevens[0];
+    addToMap(sevenString, 4, results);
+  }
   const eights = lengthBucket.get(lengthForAn8);
-  if(ones){
-    ones[0]?.split("").forEach(char => {
-      possible.set(char, [DisplayPart.rightBottom, DisplayPart.rightTop])
-    })
+  let eightString: string;
+  const hasEights = !!eights;
+  if (hasEights) {
+    eightString = eights[0];
+    addToMap(eightString, 4, results);
   }
-  if(sevens){
-    if(ones){
-      const top = charactersNotInString(sevens[0], ones[0]);
-      possible.set(top[0], [DisplayPart.top]);
-      // find the different thats the top 
+
+  let leftTopMiddle = findLeftTopAndMidleCharacters(ones, sevens, fours);
+  let fives: string[] | undefined = [];
+  let twos: string[] | undefined = [];
+
+  if (leftTopMiddle) {
+    const known = leftTopMiddle[1];
+    fives = lengthBucket
+      .get(lengthForA5)
+      ?.filter((x) => x.includes(known[0]) && x.includes(known));
+    const valueToLookFor = hasSevens
+      ? sevens[0]
+      : hasOnes
+      ? ones[0]
+      : undefined;
+    if (valueToLookFor) {
+      twos = lengthBucket
+        .get(lengthForA2)
+        ?.filter(
+          (x) =>
+            !x.includes(known[0]) &&
+            x.includes(known) &&
+            charactersNotInString(valueToLookFor, x).length === 1
+        );
     }
   }
-  if(fours){
-    let possibleLeftTopAndMiddle: string[] = [];
-    if(ones){
-      possibleLeftTopAndMiddle = charactersNotInString(fours[0], ones[0])
-    }else if (sevens){
-      possibleLeftTopAndMiddle = charactersNotInString(fours[0], sevens[0])
-    }
-    possibleLeftTopAndMiddle.forEach(char => possible.set(char, []))
+
+  let threes: string[] | undefined;
+  if (ones || sevens) {
+    const valueToLookFor = sevens ? sevens[0] : ones ? ones[0] : "wont find me";
+    threes = lengthBucket
+      .get(lengthForA3)
+      ?.filter((x) => charactersNotInString(valueToLookFor, x).length == 0);
   }
 }
 
@@ -91,7 +133,7 @@ export async function countOneFourSevenEight(
   inputProvider: () => Promise<Entry[]>
 ): Promise<number> {
   const input = await inputProvider();
-  const desiredLengths = [lengthForA1,lengthForA4, lengthForA7, lengthForAn8];
+  const desiredLengths = [lengthForA1, lengthForA4, lengthForA7, lengthForAn8];
   const oneFourSevenEight = input
     .flatMap((x) => x.outputValue)
     .filter((x) => desiredLengths.includes(x.length));
