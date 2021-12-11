@@ -32,12 +32,6 @@ function lineFromString(str: string): Line {
   }
   const point1 = pointFromString(parts[0]);
   const point2 = pointFromString(parts[1]);
-  console.log(str);
-  console.table({
-    point1,
-    point2,
-    type: lineType(point1, point2),
-  });
   return {
     point1,
     point2,
@@ -59,9 +53,10 @@ export async function readTestLines(
 }
 
 async function read(
-  inputFilePath: string,
+  inputFile: string,
   filter?: (line: Line) => boolean
 ): Promise<Line[]> {
+  const inputFilePath = path.join(inputFile);
   console.log(inputFilePath);
   const raw = readFileSync(inputFilePath, "utf8").toString().split("\n");
   const lines = raw.map(lineFromString);
