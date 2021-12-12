@@ -48,6 +48,42 @@ function pointToString(point: Point): string {
   return `${point.row}:${point.column}`;
 }
 
+function consolidateBasins(
+  pointToBasin: Map<string, Basin>,
+  basins: Basin[]
+): Basin {
+  const dedupedBasins = basins.filter(
+    (basin, index, array) => array.findIndex((x) => x === basin) === index
+  );
+  dedupedBasins.sort((a, b) => (a!.points.length < b!.points.length ? 1 : -1));
+
+  // take the biggest
+  const [bigBasin, ...otherBasins] = dedupedBasins;
+
+  const uniqueSmallBasins = otherBasins;
+  // find all points in the others
+  const uniqueSmallBasinPoints = uniqueSmallBasins
+    .flatMap((basin) => basin.points)
+    .filter(
+      (point, index, arr) =>
+        arr.findIndex(
+          (x) => x.column === point.column && x.row === point.row
+        ) === index
+    );
+  // move points to big basin
+  bigBasin.points = [...bigBasin.points, ...uniqueSmallBasinPoints];
+  // update points in map
+  uniqueSmallBasinPoints.forEach((point) => {
+    pointToBasin.set(pointToString(point), bigBasin);
+  });
+
+  // set small basins to 0
+  uniqueSmallBasins.forEach((basin) => {
+    basin.points = [];
+  });
+  return bigBasin;
+}
+
 function basinFinder(data: number[][]): number {
   const mapPointToBasin = new Map<string, Basin>();
   const basins: Basin[] = [];
@@ -63,12 +99,10 @@ function basinFinder(data: number[][]): number {
 
       if (node.height === 9) {
         // nines are not in a basin bug out
-        console.log(node, "has height 9");
         return;
       }
       const neighbours = neighboursLowestFirst(node, data);
       if (neighbours.length === 0) {
-        console.log("no neighbours");
         // all neighbours are 9s
       }
       // if the lowest neighbour is already in a basin then use that basin
@@ -77,15 +111,13 @@ function basinFinder(data: number[][]): number {
       );
 
       // if there are multiple basins then collapse them into one.
+      const neighbourBasins = neighboursInABasin
+        .map((n) => mapPointToBasin.get(pointToString(n)))
+        .filter((x) => x) as Basin[];
 
-      if (lowestNeighbourInABasin) {
-        console.log(
-          "lowest neighbour in a basin",
-          Array.from(mapPointToBasin).length
-        );
-        const basinToUse = mapPointToBasin.get(
-          pointToString(lowestNeighbourInABasin)
-        );
+      if (neighboursInABasin.length > 0) {
+        const basinToUse = consolidateBasins(mapPointToBasin, neighbourBasins);
+
         mapPointToBasin.set(pointToString(node), basinToUse!);
         basinToUse!.points.push(node);
       } else {
@@ -100,7 +132,7 @@ function basinFinder(data: number[][]): number {
 
   console.log(`Found ${basins.length} basins`);
   basins.sort((a, b) => (a.points > b.points ? -1 : 1));
-  console.table(basins.map((x) => x.points.length));
+  console.table(basins.map((x) => x.points.map(pointToString)));
   return (
     basins[0].points.length * basins[1].points.length * basins[2].points.length
   );
@@ -115,11 +147,9 @@ describe(basinFinder, () => {
       )
     ).toEqual(1134);
   });
-  // it("works against full input", async () => {
-  //   expect(
-  //     lowPointRiskFinder(
-  //       await readDataToArray(path.join(__dirname, "input.txt"))
-  //     )
-  //   ).toEqual(15);
-  // });
+  it("works against full input", async () => {
+    expect(
+      basinFinder(await readDataToArray(path.join(__dirname, "input.txt")))
+    ).toEqual(15);
+  });
 });
